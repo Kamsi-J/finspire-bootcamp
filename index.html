@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kamsisochukwu Jideonwo — Finspire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --charcoal: #1C1C28;
+    --surface: #242436;
+    --maroon: #7B1C2B;
+    --gold: #C9A84C;
+    --cream: #F5F0E8;
+    --muted: #9E9EB0;
+    --white: #FAFAF8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--charcoal);
+    color: var(--cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 2.5rem;
+    background: rgba(28,28,40,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,.12);
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    color: var(--gold);
+    letter-spacing: .5px;
+  }
+  .logo span { color: var(--cream); font-weight: 400; }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav a {
+    text-decoration: none; color: var(--muted);
+    font-size: .85rem; font-weight: 500;
+    letter-spacing: .4px; text-transform: uppercase;
+    transition: color .25s;
+  }
+  nav a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 8rem 2.5rem 4rem;
+    gap: 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-photo {
+    flex-shrink: 0;
+    width: 280px; height: 340px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,.4);
+  }
+  .hero-photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  .hero-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top;
+  }
+  .hero-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: .75rem;
+  }
+  .hero-text .tagline {
+    font-size: 1.15rem;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    letter-spacing: .3px;
+  }
+  .hero-text p {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 480px;
+    margin-bottom: 2rem;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: .85rem 2rem;
+    background: var(--gold);
+    color: var(--charcoal);
+    font-weight: 600;
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background .25s;
+  }
+  .cta-btn:hover { background: #d4b35a; }
+
+  /* SECTIONS */
+  section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem;
+  }
+  .section-label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .section-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--white);
+    margin-bottom: 2rem;
+    line-height: 1.25;
+  }
+
+  /* ABOUT */
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .about-content p {
+    color: var(--muted);
+    font-size: .95rem;
+  }
+
+  .divider {
+    max-width: 1000px;
+    margin: 0 auto;
+    border: none;
+    border-top: 1px solid rgba(201,168,76,.15);
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(201,168,76,.1);
+    transition: border-color .3s, transform .3s;
+  }
+  .service-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  .service-icon {
+    width: 40px; height: 40px;
+    background: var(--maroon);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.2rem;
+  }
+  .service-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    margin-bottom: .65rem;
+  }
+  .service-card p {
+    color: var(--muted);
+    font-size: .85rem;
+    line-height: 1.65;
+  }
+
+  /* FINSPIRE SECTION */
+  .brand-block {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 3rem;
+    border: 1px solid rgba(201,168,76,.12);
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .brand-block .brand-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: .25rem;
+  }
+  .brand-block .brand-motto {
+    font-size: .85rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .brand-block p {
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: .95rem;
+  }
+
+  /* CONTACT */
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+  .contact-info a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color .25s;
+  }
+  .contact-info a:hover { color: var(--gold); }
+  .contact-info .label {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+  .contact-info .label:first-child { margin-top: 0; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--muted);
+    font-size: .8rem;
+    border-top: 1px solid rgba(201,168,76,.1);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    nav ul { gap: 1rem; }
+    nav a { font-size: .75rem; }
+    .hero {
+      flex-direction: column;
+      text-align: center;
+      padding: 7rem 1.5rem 3rem;
+      gap: 2.5rem;
+    }
+    .hero-photo { width: 200px; height: 250px; }
+    .hero-text h1 { font-size: 2rem; }
+    .hero-text p { margin-left: auto; margin-right: auto; }
+    .about-content { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    section { padding: 3rem 1.5rem; }
+    .section-heading { font-size: 1.7rem; }
+    .brand-block { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">KJ<span> — Finspire</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-photo">
+    <img src="189258.jpg" alt="Kamsisochukwu Jideonwo">
+  </div>
+  <div class="hero-text">
+    <h1>Kamsisochukwu Jideonwo</h1>
+    <p class="tagline">Investor · Educator · Fund Manager</p>
+    <p>I help everyday people understand the markets and build wealth with confidence — through education, community, and technology.</p>
+    <a href="#services" class="cta-btn">What I Do</a>
+  </div>
+</div>
+
+<hr class="divider">
+
+<section id="about">
+  <div class="section-label">Background</div>
+  <h2 class="section-heading">The Story Behind the Work</h2>
+  <div class="about-content">
+    <p>I taught myself to invest by reading annual reports, studying balance sheets, and putting real money on the line in the Nigerian Stock Exchange. That process — the confusion, the breakthroughs, the compounding — became the foundation for everything I build today.</p>
+    <p>Now I run Finspire, an investment education brand that takes people from "I don't know where to start" to making informed decisions with their own money. I also manage a private investment fund and I'm building an AI-powered equity research platform for the Nigerian market.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="services">
+  <div class="section-label">Services</div>
+  <h2 class="section-heading">What I Do</h2>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">📚</div>
+      <h3>Investment Education</h3>
+      <p>Paid cohort-based courses and free workshops that teach retail investors how to analyse stocks, build portfolios, and think long-term. Over 10 cohorts delivered through the Finspire programme.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Fund Management</h3>
+      <p>I manage the Finspire Fund — a private investment portfolio spanning NGX equities, US stocks, and crypto. Structured with transparent reporting and a disciplined, fundamentals-first approach.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <h3>Finspire Intelligence</h3>
+      <p>An AI-powered equity research platform I'm building for the Nigerian market. It lets retail investors query company financials in plain language and receive analyst-grade insight on NGX-listed stocks.</p>
+    </div>
+
+  </div>
+
+  <div class="brand-block">
+    <div class="brand-name">Finspire</div>
+    <div class="brand-motto">Where Money Meets Mastery</div>
+    <p>Finspire is the brand behind all of this — a growing community of retail investors learning to take control of their financial future through structured education, active community engagement, and purpose-built technology.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="contact">
+  <div class="section-label">Get in Touch</div>
+  <h2 class="section-heading">Let's Talk</h2>
+  <div class="contact-info">
+    <div class="label">Email</div>
+    <a href="mailto:kamsijideonwo@gmail.com">kamsijideonwo@gmail.com</a>
+    <div class="label">LinkedIn</div>
+    <a href="https://www.linkedin.com/in/jideonwo-kamsi" target="_blank">linkedin.com/in/jideonwo-kamsi</a>
+    <div class="label">Location</div>
+    <span style="color:var(--cream)">Lagos, Nigeria</span>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Kamsisochukwu Jideonwo. All rights reserved.
+</footer>
+
+</body>
+</html>
