@@ -1050,7 +1050,7 @@
   </div>
 </div>
 
-<script src="https://korapay.com/v1/koraCheckout.min.js"></script>
+<script src="https://korablobstorage.blob.core.windows.net/modal-bucket/korapay-collections.min.js"></script>
 
 <script>
   /* INIT */
@@ -1102,7 +1102,7 @@
     err.style.display = 'none';
     const btn = document.getElementById('pay-btn');
     btn.textContent = 'Loading…'; btn.disabled = true;
-    Korapay.initialize({
+    window.Korapay.initialize({
       key: KORAPAY_KEY,
       reference: 'FIN_' + Date.now() + '_' + Math.random().toString(36).substr(2,5).toUpperCase(),
       amount: chosenTier === 'early' ? EARLY_PRICE : REGULAR_PRICE,
