@@ -282,88 +282,55 @@ body {
   font-style: italic;
 }
 
-.tier-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.enroll-body {
+  padding: 2rem;
 }
 
-@media (max-width: 480px) {
-  .tier-row { grid-template-columns: 1fr; }
-}
-
-.tier {
-  padding: 1.875rem 2rem;
-}
-.tier + .tier { border-left: 1px solid rgba(245, 239, 230, 0.1); }
-@media (max-width: 480px) {
-  .tier + .tier { border-left: none; border-top: 1px solid rgba(245, 239, 230, 0.1); }
-}
-
-.tier-label {
-  font-size: 0.625rem;
+.enroll-price {
+  font-size: 2.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--beige);
-  opacity: 0.5;
-  margin-bottom: 0.75rem;
-  font-family: var(--font);
-}
-.tier.featured .tier-label { color: var(--gold); opacity: 1; }
-
-.tier-price {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--beige);
+  color: var(--gold);
   line-height: 1;
-  margin-bottom: 0.375rem;
   font-variant-numeric: tabular-nums;
+  margin-bottom: 0.375rem;
 }
-.tier.featured .tier-price { color: var(--gold); }
 
-.tier-note {
-  font-size: 0.8125rem;
+.enroll-note {
+  font-size: 0.9375rem;
   color: var(--beige);
-  opacity: 0.5;
-  margin-bottom: 1.375rem;
+  opacity: 0.65;
   font-style: italic;
-  line-height: 1.45;
+  margin-bottom: 1.75rem;
+  line-height: 1.5;
 }
 
-.tier-btn {
+.enroll-btn {
   display: block;
   width: 100%;
   text-align: center;
   font-family: var(--font);
   font-weight: 600;
-  font-size: 0.9375rem;
-  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  padding: 0.875rem 1rem;
   border-radius: var(--r-sm);
   cursor: pointer;
   border: none;
+  background: var(--gold);
+  color: var(--charcoal);
   transition: background 0.18s, transform 0.13s;
 }
-.tier-btn:active { transform: scale(0.98); }
-.tier-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.enroll-btn:hover { background: var(--gold-dim); }
+.enroll-btn:active { transform: scale(0.98); }
+.enroll-btn:focus-visible { outline: 2px solid var(--beige); outline-offset: 3px; }
+.enroll-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-.tier.featured .tier-btn { background: var(--gold); color: var(--charcoal); }
-.tier.featured .tier-btn:hover { background: var(--gold-dim); }
-.tier.standard .tier-btn {
-  background: transparent;
-  border: 1.5px solid rgba(245, 239, 230, 0.25);
-  color: var(--beige);
-}
-.tier.standard .tier-btn:hover { border-color: rgba(245, 239, 230, 0.5); }
-
-.tier-spots {
-  margin-top: 0.75rem;
-  font-size: 0.75rem;
-  text-align: center;
-  color: var(--beige);
-  opacity: 0.45;
+.enroll-spots {
+  margin-top: 0.875rem;
+  font-size: 0.8125rem;
+  color: var(--gold);
+  opacity: 0.8;
   font-style: italic;
 }
-.tier.featured .tier-spots { color: var(--gold); opacity: 0.8; }
 
 .pricing-footer {
   padding: 1.125rem 2rem;
@@ -710,28 +677,13 @@ body {
         <p>First 15 orders get early-bird pricing. After that, regular price applies.</p>
       </div>
 
-      <div class="tier-row">
-        <div class="tier featured">
-          <div class="tier-label">Early Bird</div>
-          <div class="tier-price">₦15,000</div>
-          <div class="tier-note">First 15 spots only. You're still in time.</div>
-          <button class="tier-btn" id="early-btn" onclick="openModal('early')">
-            Claim early spot &rarr;
-          </button>
-          <div class="tier-spots">
-            <span id="spots-display">15</span> of 15 spots remaining
-          </div>
-        </div>
-
-        <div class="tier standard">
-          <div class="tier-label">Regular</div>
-          <div class="tier-price">₦20,000</div>
-          <div class="tier-note">Full price. Same cohort, same content.</div>
-          <button class="tier-btn" onclick="openModal('regular')">
-            Join at full price
-          </button>
-          <div class="tier-spots" style="visibility:hidden">—</div>
-        </div>
+      <div class="enroll-body">
+        <div class="enroll-price" id="enroll-price">₦15,000</div>
+        <div class="enroll-note" id="enroll-note">Early bird price — <span id="spots-display">15</span> of 15 spots remaining at this rate.</div>
+        <button class="enroll-btn" id="enroll-btn" onclick="openModal('early')">
+          Join the Advanced Cohort &rarr;
+        </button>
+        <div class="enroll-spots" id="enroll-spots"></div>
       </div>
 
       <div class="pricing-footer">
@@ -783,9 +735,21 @@ body {
   /* ── Spots ── */
   function renderSpots() {
     const n = spotsRemaining;
-    document.getElementById('hero-spots').textContent   = n;
-    document.getElementById('bar-spots').textContent    = n + ' spot' + (n !== 1 ? 's' : '');
+    const earlyAvail = n > 0;
+    const price = earlyAvail ? EARLY_PRICE : REGULAR_PRICE;
+
+    document.getElementById('hero-spots').textContent    = n;
+    document.getElementById('bar-spots').textContent     = n + ' spot' + (n !== 1 ? 's' : '');
     document.getElementById('spots-display').textContent = n;
+
+    document.getElementById('enroll-price').textContent =
+      '₦' + price.toLocaleString('en-NG');
+    document.getElementById('enroll-note').textContent = earlyAvail
+      ? 'Early bird price — ' + n + ' of ' + TOTAL_SPOTS + ' spots remaining at this rate.'
+      : 'Regular price — early bird spots are now filled.';
+
+    const enrollBtn = document.getElementById('enroll-btn');
+    enrollBtn.onclick = () => openModal(earlyAvail ? 'early' : 'regular');
 
     const pips = document.getElementById('hero-pips');
     pips.innerHTML = '';
@@ -795,12 +759,11 @@ body {
       pips.appendChild(p);
     }
 
-    if (n <= 0) {
-      const eb = document.getElementById('early-btn');
-      eb.textContent = 'Early bird sold out';
-      eb.disabled = true;
-      document.querySelector('.spot-row').innerHTML = '<span>Early bird spots filled — regular price ₦20,000 now applies.</span>';
-      document.getElementById('urgency-bar').innerHTML = 'Early bird sold out &mdash; regular price <strong>₦20,000</strong> now applies.';
+    if (!earlyAvail) {
+      document.querySelector('.spot-row').innerHTML =
+        '<span>Early bird spots filled — joining now at ₦20,000.</span>';
+      document.getElementById('urgency-bar').innerHTML =
+        'Early bird sold out &mdash; regular price <strong>₦20,000</strong> now applies.';
     }
   }
   renderSpots();
