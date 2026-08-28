@@ -1,11 +1,3 @@
-<!--
-THESIS: Enrollment gate for the Finspire Advanced Cohort. Refuses the scroll-marathon course page; the offer is legible in one viewport, the value is a clean list not a card grid, and the payment is the only action.
-OWN-WORLD: Finspire brand — Beige #F5EFE6 ground, Maroon #701428 dominant, Gold #C4960A as restrained accent, Charcoal #1C1C1E for pricing surface. Lora serif throughout. No gradient text, no icon-tile grids, no eyebrows above headings.
-STORY: Visitor already sold from the workshop. Page confirms the offer, surfaces the value stack, presents pricing tiers, takes the money.
-FIRST VIEWPORT: Full-width urgency bar in maroon. Beige hero with large Lora headline in maroon. Spot counter. Maroon CTA button. Nothing else above the fold.
-FORM: Payment/enrollment gate. Persuade mode. Finspire Education sub-brand.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,352 +12,485 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
-/* ── Tokens ─────────────────────────────────────────────────────── */
 :root {
-  --maroon:      #701428;
-  --maroon-15:   rgba(112, 20, 40, 0.15);
-  --maroon-30:   rgba(112, 20, 40, 0.3);
-  --beige:       #F5EFE6;
-  --beige-deep:  #EDE4D6;
-  --gold:        #C4960A;
-  --gold-dim:    #A67D08;
-  --gold-wash:   #F0DFA0;
-  --charcoal:    #1C1C1E;
-  --err:         #B02020;
-
+  --maroon:   #701428;
+  --maroon-d: #4d0d1b;
+  --beige:    #F5EFE6;
+  --beige-d:  #E8DFD0;
+  --gold:     #C4960A;
+  --gold-d:   #A67D08;
+  --charcoal: #1C1C1E;
+  --red:      #C0392B;
   --font: 'Lora', Georgia, serif;
-  --max-w: 680px;
-  --r-sm: 6px;
-  --r-md: 12px;
 }
 
-/* ── Reset ──────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--beige);
-  color: var(--maroon);
+  color: var(--charcoal);
   font-family: var(--font);
   font-size: 1rem;
   line-height: 1.7;
-  min-height: 100vh;
 }
 
-/* ── Layout ─────────────────────────────────────────────────────── */
-.wrap {
-  width: 100%;
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
+.wrap--wide { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
 
-/* ── Urgency bar ────────────────────────────────────────────────── */
+/* ── Urgency bar ── */
 .urgency-bar {
-  background: var(--maroon);
-  color: var(--beige);
+  background: var(--red);
+  color: #fff;
   text-align: center;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.65rem 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   line-height: 1.4;
 }
-.urgency-bar strong { color: var(--gold); }
+.urgency-bar span { opacity: 0.9; font-weight: 400; }
 
-/* ── Hero ───────────────────────────────────────────────────────── */
+/* ── Hero ── */
 .hero {
-  padding: 4.5rem 0 3.75rem;
-  border-bottom: 1px solid var(--maroon-15);
+  background: var(--maroon);
+  padding: 4rem 0 4.5rem;
   text-align: center;
 }
 
-.wordmark {
+.hero-eyebrow {
   display: inline-block;
-  font-size: 0.6875rem;
+  background: var(--gold);
+  color: var(--charcoal);
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--maroon);
-  opacity: 0.55;
-  margin-bottom: 1.75rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 3px;
+  margin-bottom: 2rem;
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 7vw, 4rem);
+  font-size: clamp(2rem, 5.5vw, 3.25rem);
   font-weight: 700;
-  line-height: 1.1;
-  color: var(--maroon);
+  color: var(--beige);
+  line-height: 1.12;
   text-wrap: balance;
-  margin-bottom: 1.125rem;
+  margin-bottom: 1.25rem;
 }
 
 .hero h1 em {
   font-style: italic;
-  font-weight: 400;
   color: var(--gold);
 }
 
 .hero-sub {
-  font-size: 1.0625rem;
-  color: var(--maroon);
-  opacity: 0.75;
-  max-width: 52ch;
-  line-height: 1.75;
-  margin: 0 auto 2.5rem;
+  font-size: 1.125rem;
+  color: var(--beige);
+  opacity: 0.8;
+  max-width: 54ch;
+  margin: 0 auto 2.75rem;
+  line-height: 1.7;
 }
 
-/* Hero enrollment card */
-.hero-card {
-  background: var(--charcoal);
-  border-radius: var(--r-md);
-  padding: 1.75rem 2rem;
-  max-width: 480px;
-  margin: 0 auto;
+.hero-cta-box {
+  display: inline-block;
+  background: var(--beige);
+  border-radius: 10px;
+  padding: 2rem 2.5rem;
   text-align: center;
+  max-width: 420px;
+  width: 100%;
 }
 
-.hero-card-price {
+.hero-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.375rem;
+}
+
+.price-old {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #aaa;
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.price-new {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--maroon);
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  margin-bottom: 0.375rem;
 }
 
-.hero-card-note {
-  font-size: 0.875rem;
-  color: var(--beige);
+.price-badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  margin-bottom: 0.625rem;
+}
+
+.price-note {
+  font-size: 0.8125rem;
+  color: var(--charcoal);
   opacity: 0.6;
+  margin-bottom: 1.25rem;
   font-style: italic;
-  margin-bottom: 1.375rem;
-  line-height: 1.5;
 }
 
-.hero-card-btn {
+.btn-gold {
   display: block;
   width: 100%;
-  text-align: center;
-  font-family: var(--font);
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.875rem 1rem;
-  border-radius: var(--r-sm);
-  cursor: pointer;
-  border: none;
   background: var(--gold);
   color: var(--charcoal);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
   transition: background 0.18s, transform 0.13s;
-  margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 0.75rem;
 }
-.hero-card-btn:hover { background: var(--gold-dim); }
-.hero-card-btn:active { transform: scale(0.98); }
-.hero-card-btn:focus-visible { outline: 2px solid var(--beige); outline-offset: 3px; }
+.btn-gold:hover { background: var(--gold-d); transform: translateY(-1px); }
+.btn-gold:active { transform: scale(0.98); }
+.btn-gold:focus-visible { outline: 2px solid var(--charcoal); outline-offset: 3px; }
 
-.hero-card-trust {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: var(--beige);
-  opacity: 0.4;
-  font-style: italic;
+.spots-left {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--red);
 }
 
-/* ── Section base ───────────────────────────────────────────────── */
+/* ── Section base ── */
 .section {
   padding: 4rem 0;
-  border-bottom: 1px solid var(--maroon-15);
+  border-bottom: 1px solid rgba(112,20,40,0.12);
 }
 
-.section-title {
-  font-size: clamp(1.375rem, 3.5vw, 1.875rem);
+.section--dark {
+  background: var(--charcoal);
+  color: var(--beige);
+  border-bottom: none;
+  padding: 4rem 0;
+}
+
+.section--maroon {
+  background: var(--maroon);
+  color: var(--beige);
+  border-bottom: none;
+  padding: 4rem 0;
+}
+
+.label {
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: var(--maroon);
-  margin-bottom: 0.375rem;
-  text-wrap: balance;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.875rem;
+}
+
+.section h2 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
   line-height: 1.2;
-}
-
-.section-intro {
-  font-size: 0.9375rem;
+  text-wrap: balance;
+  margin-bottom: 1rem;
   color: var(--maroon);
-  opacity: 0.65;
-  margin-bottom: 2.5rem;
-  max-width: 48ch;
-  font-style: italic;
+}
+.section--dark h2, .section--maroon h2 { color: var(--beige); }
+
+.section p.lead {
+  font-size: 1.0625rem;
+  opacity: 0.75;
+  max-width: 58ch;
+  line-height: 1.75;
+  margin-bottom: 2rem;
 }
 
-/* ── Value list ─────────────────────────────────────────────────── */
-.value-list {
+/* ── Pain list ── */
+.pain-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.875rem;
+  margin-bottom: 2rem;
+}
+
+.pain-list li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 0.875rem;
+  align-items: start;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--charcoal);
+}
+
+.pain-list li::before {
+  content: '✗';
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-top: 1px;
+}
+
+/* ── Value stack ── */
+.value-stack {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .value-item {
   display: grid;
-  grid-template-columns: 22px 1fr;
+  grid-template-columns: 28px 1fr auto;
   gap: 1rem;
   align-items: start;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(245,239,230,0.1);
 }
+.value-item:last-child { border-bottom: none; }
 
-.value-check {
+.v-check {
+  margin-top: 2px;
   flex-shrink: 0;
-  margin-top: 3px;
 }
 
-.value-item-body strong {
+.v-body strong {
   display: block;
   font-weight: 600;
-  color: var(--maroon);
-  font-size: 0.9375rem;
-  line-height: 1.4;
-}
-
-.value-item-body p {
-  font-size: 0.8125rem;
-  color: var(--maroon);
-  opacity: 0.65;
-  margin-top: 0.2rem;
-  line-height: 1.6;
-  font-style: italic;
-}
-
-.value-divider {
-  border: none;
-  border-top: 1px solid var(--maroon-15);
-  margin: 0.5rem 0;
-}
-
-.bonus-badge {
-  display: inline-block;
-  background: var(--maroon);
-  color: var(--gold);
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  margin-bottom: 0.35rem;
-}
-
-/* ── Pricing ────────────────────────────────────────────────────── */
-.pricing-section {
-  padding: 4rem 0 5rem;
-}
-
-.pricing-wrap {
-  background: var(--charcoal);
-  border-radius: var(--r-md);
-  overflow: hidden;
-}
-
-.pricing-header {
-  padding: 2rem 2rem 1.5rem;
-  border-bottom: 1px solid rgba(245, 239, 230, 0.1);
-  text-align: center;
-}
-
-.pricing-header h2 {
-  font-size: clamp(1.25rem, 3vw, 1.625rem);
-  font-weight: 700;
+  font-size: 1rem;
   color: var(--beige);
-  margin-bottom: 0.375rem;
-  line-height: 1.2;
+  margin-bottom: 0.2rem;
 }
 
-.pricing-header p {
-  font-size: 0.875rem;
+.v-body span {
+  font-size: 0.8125rem;
   color: var(--beige);
   opacity: 0.55;
   font-style: italic;
-}
-
-.enroll-body {
-  padding: 2rem;
-  text-align: center;
-}
-
-.enroll-price {
-  font-size: 2.75rem;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  margin-bottom: 0.375rem;
-}
-
-.enroll-note {
-  font-size: 0.9375rem;
-  color: var(--beige);
-  opacity: 0.65;
-  font-style: italic;
-  margin-bottom: 1.75rem;
   line-height: 1.5;
 }
 
-.enroll-btn {
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-family: var(--font);
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.875rem 1rem;
-  border-radius: var(--r-sm);
-  cursor: pointer;
-  border: none;
+.v-value {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--gold);
+  white-space: nowrap;
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bonus-tag {
+  display: inline-block;
   background: var(--gold);
   color: var(--charcoal);
-  transition: background 0.18s, transform 0.13s;
-}
-.enroll-btn:hover { background: var(--gold-dim); }
-.enroll-btn:active { transform: scale(0.98); }
-.enroll-btn:focus-visible { outline: 2px solid var(--beige); outline-offset: 3px; }
-.enroll-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-.enroll-spots {
-  margin-top: 0.875rem;
-  font-size: 0.8125rem;
-  color: var(--gold);
-  opacity: 0.8;
-  font-style: italic;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  margin-bottom: 0.3rem;
 }
 
-.pricing-footer {
-  padding: 1.125rem 2rem;
-  border-top: 1px solid rgba(245, 239, 230, 0.1);
+/* ── Total row ── */
+.total-row {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(196,150,10,0.08);
+  border: 1px solid rgba(196,150,10,0.3);
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  font-size: 0.8125rem;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.total-label {
+  font-size: 0.875rem;
   color: var(--beige);
-  opacity: 0.4;
+  opacity: 0.7;
   font-style: italic;
 }
 
-/* ── Footer ─────────────────────────────────────────────────────── */
+.total-amount {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Who section ── */
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 560px) { .who-grid { grid-template-columns: 1fr; } }
+
+.who-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.who-card--yes {
+  background: rgba(112,20,40,0.06);
+  border: 1px solid rgba(112,20,40,0.15);
+}
+
+.who-card--no {
+  background: rgba(192,57,43,0.06);
+  border: 1px solid rgba(192,57,43,0.15);
+}
+
+.who-card h3 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.who-card--yes h3 { color: var(--maroon); }
+.who-card--no h3 { color: var(--red); }
+
+.who-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.who-list li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 0.625rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--charcoal);
+}
+
+.who-list--yes li::before { content: '✓'; color: var(--maroon); font-weight: 700; }
+.who-list--no li::before  { content: '✗'; color: var(--red);    font-weight: 700; }
+
+/* ── Closing CTA ── */
+.cta-section {
+  background: var(--maroon);
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+  font-weight: 700;
+  color: var(--beige);
+  margin-bottom: 0.875rem;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.cta-section h2 em { color: var(--gold); font-style: italic; }
+
+.cta-section p {
+  font-size: 1.0625rem;
+  color: var(--beige);
+  opacity: 0.75;
+  max-width: 48ch;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.cta-box {
+  display: inline-block;
+  background: var(--beige);
+  border-radius: 10px;
+  padding: 2.5rem 2.5rem 2rem;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+}
+
+.cta-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.cta-label-above {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.5rem;
+}
+
+.cta-spots {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--red);
+  margin: 0.5rem 0 1.5rem;
+}
+
+.cta-note {
+  font-size: 0.8125rem;
+  color: var(--charcoal);
+  opacity: 0.55;
+  margin-top: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.trust-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--beige);
+  opacity: 0.45;
+  font-style: italic;
+}
+
+/* ── Footer ── */
 .footer {
-  padding: 2.5rem 0;
+  background: var(--charcoal);
+  padding: 2rem 0;
   text-align: center;
   font-size: 0.8125rem;
-  color: var(--maroon);
-  opacity: 0.5;
-  border-top: 1px solid var(--maroon-15);
-  font-style: italic;
+  color: var(--beige);
+  opacity: 1;
 }
+.footer span { opacity: 0.45; }
 
-/* ── Modal ──────────────────────────────────────────────────────── */
+/* ── Modal ── */
 .overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(28, 28, 30, 0.8);
+  background: rgba(10,10,12,0.85);
   backdrop-filter: blur(4px);
   z-index: 100;
   align-items: center;
@@ -376,12 +501,11 @@ body {
 
 .modal {
   background: var(--beige);
-  border-radius: var(--r-md);
+  border-radius: 12px;
   padding: 2rem;
   width: 100%;
   max-width: 420px;
   position: relative;
-  border: 1px solid var(--maroon-15);
 }
 
 .modal-close {
@@ -390,15 +514,14 @@ body {
   right: 1.125rem;
   background: none;
   border: none;
-  color: var(--maroon);
-  opacity: 0.4;
+  color: var(--charcoal);
+  opacity: 0.35;
   font-size: 1.375rem;
   cursor: pointer;
   line-height: 1;
-  padding: 0.125rem 0.375rem;
   font-family: var(--font);
 }
-.modal-close:hover { opacity: 0.8; }
+.modal-close:hover { opacity: 0.75; }
 
 .modal h3 {
   font-size: 1.375rem;
@@ -408,16 +531,16 @@ body {
 }
 
 .modal-price {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--maroon);
   font-variant-numeric: tabular-nums;
   margin-bottom: 0.2rem;
 }
 
 .modal-tier-note {
   font-size: 0.8125rem;
-  color: var(--maroon);
+  color: var(--charcoal);
   opacity: 0.55;
   margin-bottom: 1.75rem;
   font-style: italic;
@@ -428,17 +551,16 @@ body {
   display: block;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--maroon);
-  opacity: 0.75;
+  color: var(--charcoal);
+  opacity: 0.7;
   margin-bottom: 0.4rem;
-  letter-spacing: 0.02em;
 }
 .form-field input {
   width: 100%;
   background: #fff;
-  border: 1px solid var(--maroon-30);
-  border-radius: var(--r-sm);
-  color: var(--maroon);
+  border: 1px solid rgba(112,20,40,0.25);
+  border-radius: 6px;
+  color: var(--charcoal);
   font-family: var(--font);
   font-size: 0.9375rem;
   padding: 0.7rem 0.9rem;
@@ -446,12 +568,12 @@ body {
   transition: border-color 0.18s;
 }
 .form-field input:focus { border-color: var(--maroon); }
-.form-field input::placeholder { color: var(--maroon); opacity: 0.35; }
+.form-field input::placeholder { color: var(--charcoal); opacity: 0.3; }
 
 .form-err {
   display: none;
   font-size: 0.8125rem;
-  color: var(--err);
+  color: var(--red);
   margin-bottom: 1rem;
 }
 
@@ -460,41 +582,34 @@ body {
   background: var(--maroon);
   color: var(--beige);
   font-family: var(--font);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1rem;
   padding: 0.875rem 1rem;
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   transition: background 0.18s;
   margin-top: 0.5rem;
 }
-.modal-submit:hover { background: #5a1020; }
+.modal-submit:hover { background: var(--maroon-d); }
 .modal-submit:disabled { opacity: 0.55; cursor: not-allowed; }
 .modal-submit:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
 .modal-trust {
   font-size: 0.75rem;
-  color: var(--maroon);
-  opacity: 0.5;
+  color: var(--charcoal);
+  opacity: 0.45;
   text-align: center;
   margin-top: 1rem;
   font-style: italic;
 }
 
-/* ── Scroll fade ────────────────────────────────────────────────── */
-.fade-up {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-.fade-up.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .fade-up { opacity: 1; transform: none; transition: none; }
-}
+/* ── Fade in ── */
+.fade { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+.fade.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .fade { opacity:1; transform:none; transition:none; } }
 </style>
 
-<!-- ── CONFIG ── -->
 <script>
   const SPOTS_LEFT      = 15;
   const TOTAL_SPOTS     = 15;
@@ -510,207 +625,304 @@ body {
 
 <!-- ── URGENCY BAR ── -->
 <div class="urgency-bar" id="urgency-bar">
-  Early bird: <strong id="bar-spots">15 spots</strong> at ₦15,000 &mdash; regular price ₦20,000
+  🔥 LIMITED TIME: First <strong id="bar-spots">15</strong> spots at ₦15,000 <span>(regular price ₦20,000 — price goes up once spots fill)</span>
 </div>
 
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="wrap">
-    <div class="wordmark fade-up">Finspire &mdash; Advanced Cohort</div>
 
-    <h1 class="fade-up" style="transition-delay:0.07s">
-      Invest with<br><em>actual conviction.</em>
+    <div class="hero-eyebrow">Finspire Advanced Cohort</div>
+
+    <h1>
+      Finally Learn How to <em>Value Any Stock,</em><br>
+      Read a Balance Sheet, and Build a Portfolio<br>
+      That Actually Compounds
     </h1>
 
-    <p class="hero-sub fade-up" style="transition-delay:0.14s">
-      A focused, in-depth cohort for people who've started their investing journey and are ready to go deeper — valuation, stock-picking, AI tools, and a framework that holds up under pressure.
+    <p class="hero-sub">
+      A hands-on cohort for Nigerian investors who are tired of guessing — and ready to invest with real conviction, backed by frameworks that work.
     </p>
 
-    <div class="hero-card fade-up" style="transition-delay:0.2s">
-      <div class="hero-card-price" id="hero-price">₦15,000</div>
-      <div class="hero-card-note" id="hero-card-note">Early bird price &mdash; <span id="hero-spots">15</span> of 15 spots remaining at this rate.</div>
-      <button class="hero-card-btn" id="hero-cta-btn" onclick="openModal('early')">
-        Join the Advanced Cohort &rarr;
-      </button>
-      <div class="hero-card-trust">
-        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <rect x="1" y="4" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.25" opacity="0.6"/>
-          <path d="M4.5 4V3C4.5 1.895 5.395 1 6.5 1h1C8.605 1 9.5 1.895 9.5 3v1" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" opacity="0.6"/>
-        </svg>
-        Secure checkout via Korapay &mdash; WhatsApp access granted immediately after payment
+    <div class="hero-cta-box fade">
+      <div class="price-badge">LIMITED OFFER — FIRST 15 SPOTS</div>
+      <div class="hero-price-row">
+        <span class="price-old">₦20,000</span>
+        <span class="price-new">₦15,000</span>
       </div>
+      <div class="price-note">Save ₦5,000 — only <strong id="hero-spots">15</strong> spots at this price</div>
+      <button class="btn-gold" onclick="openModal()">
+        Yes, I Want This — Claim My Spot →
+      </button>
+      <div class="spots-left">⚠ Only <span id="hero-spots-2">15</span> of 15 spots remaining</div>
     </div>
+
   </div>
 </section>
 
-<!-- ── WHAT'S INSIDE ── -->
-<section class="section fade-up">
+<!-- ── PAIN SECTION ── -->
+<section class="section fade">
   <div class="wrap">
-    <h2 class="section-title">What you get</h2>
-    <p class="section-intro">Nine modules covering the ground most investors never reach.</p>
+    <div class="label">If this is you, keep reading</div>
+    <h2>You're Investing. But Something Still Feels Off.</h2>
+    <p class="lead" style="color:var(--charcoal)">You're in the market. You're buying stocks. But deep down, you're not sure you actually know what you're doing.</p>
 
-    <ul class="value-list">
+    <ul class="pain-list">
+      <li>You pick stocks based on vibes, tips, or what's trending — not because you've actually valued them</li>
+      <li>You look at a financial statement and your eyes glaze over within 30 seconds</li>
+      <li>You've heard "buy good companies" a hundred times but nobody has told you <em>how to identify one</em></li>
+      <li>Your portfolio is a mix of random positions with no clear strategy behind it</li>
+      <li>You know AI tools exist but have no idea how to use them for investing</li>
+      <li>You're sitting on cash and unsure whether to buy, wait, or diversify into ETFs or gold</li>
+    </ul>
+
+    <p style="font-size:1.05rem; font-weight:600; color:var(--maroon)">
+      That's exactly what this cohort fixes.
+    </p>
+  </div>
+</section>
+
+<!-- ── VALUE STACK ── -->
+<section class="section--dark fade">
+  <div class="wrap">
+    <div class="label">Everything you get</div>
+    <h2>The Complete Value Stack</h2>
+    <p class="lead" style="color:var(--beige)">Every module has a standalone value. Here's what's included — and what each piece would cost you to learn on your own.</p>
+
+    <ul class="value-stack">
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>Company valuation frameworks</strong>
-          <p>Know what a stock is actually worth — so you buy at the right price and sell before everyone else figures it out.</p>
+        <div class="v-body">
+          <strong>Company Valuation Frameworks</strong>
+          <span>How to calculate what a stock is actually worth — so you buy low and sell high with confidence, not luck.</span>
         </div>
+        <div class="v-value">₦50,000</div>
       </li>
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>Reading financial statements</strong>
-          <p>What to look for, what to ignore, and the signals most retail investors miss entirely.</p>
+        <div class="v-body">
+          <strong>Reading Financial Statements</strong>
+          <span>The income statement, balance sheet, cash flow — what matters, what's noise, and what most investors never look at.</span>
         </div>
+        <div class="v-value">₦35,000</div>
       </li>
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>Stock-picking frameworks</strong>
-          <p>More filters, more mental models — a repeatable system for finding genuinely good companies.</p>
+        <div class="v-body">
+          <strong>Stock-Picking Frameworks</strong>
+          <span>A repeatable system to screen for and identify genuinely strong companies — before the crowd notices them.</span>
         </div>
+        <div class="v-value">₦40,000</div>
       </li>
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>My personal Claude AI skill file</strong>
-          <p>The exact setup I use to research companies, analyse reports, and stress-test investment ideas with AI.</p>
+        <div class="v-body">
+          <strong>My Personal Claude AI Skill File</strong>
+          <span>The exact AI setup I use to research companies, stress-test ideas, and analyse reports in a fraction of the time.</span>
         </div>
+        <div class="v-value">₦30,000</div>
       </li>
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>AI tools for investing</strong>
-          <p>How to use current tools to do in 20 minutes what used to take a full weekend of reading.</p>
+        <div class="v-body">
+          <strong>AI Tools for Investing</strong>
+          <span>How to use today's AI tools to do the research of a full weekend in under an hour — practically, not theoretically.</span>
         </div>
+        <div class="v-value">₦25,000</div>
       </li>
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>Gold &amp; ETF investing</strong>
-          <p>How to invest in gold, commodity ETFs, and global indices — including the practical how-to for Nigerians.</p>
+        <div class="v-body">
+          <strong>Gold &amp; ETF Investing</strong>
+          <span>How to invest in gold, commodity ETFs, and global indices — and the practical how-to for doing it as a Nigerian investor.</span>
         </div>
+        <div class="v-value">₦30,000</div>
       </li>
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>Dividend investing, deeper</strong>
-          <p>Beyond the basics — yield traps, reinvestment strategy, building a portfolio that actually compounds.</p>
+        <div class="v-body">
+          <strong>Dividend Investing — The Deep Cut</strong>
+          <span>Yield traps, reinvestment strategy, compounding mechanics — everything the surface-level guides skip over.</span>
         </div>
+        <div class="v-value">₦30,000</div>
       </li>
 
       <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.35"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.4"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <strong>Post-class support</strong>
-          <p>Access to the group after class ends. Questions answered, portfolio reviews, ongoing conversation.</p>
+        <div class="v-body">
+          <strong>Post-Class Support</strong>
+          <span>Continued access to the group after class ends. Portfolio reviews, questions answered, ongoing conversation.</span>
         </div>
+        <div class="v-value">₦20,000</div>
       </li>
 
-      <li aria-hidden="true"><hr class="value-divider"></li>
-
-      <li class="value-item">
-        <span class="value-check" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="9.5" stroke="#C4960A" stroke-opacity="0.7"/>
-            <path d="M6 10.5L8.5 13L14 7.5" stroke="#C4960A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      <li class="value-item" style="padding-top:1.5rem; border-top: 1px solid rgba(196,150,10,0.3);">
+        <span class="v-check" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10.5" stroke="#C4960A" stroke-opacity="0.8"/>
+            <path d="M7 11.5L9.5 14L15 8.5" stroke="#C4960A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <div class="value-item-body">
-          <span class="bonus-badge">Bonus</span>
-          <strong>30-minute 1-on-1 call with me</strong>
-          <p>A private session to review your portfolio, answer your questions, and give you a clear next move.</p>
+        <div class="v-body">
+          <div class="bonus-tag">🎁 BONUS</div>
+          <strong>30-Minute Private 1-on-1 Call With Me</strong>
+          <span>We review your specific portfolio, answer your exact questions, and I give you a clear next move. One-on-one. No generic advice.</span>
         </div>
+        <div class="v-value">₦75,000</div>
       </li>
 
     </ul>
+
+    <div class="total-row">
+      <div>
+        <div class="total-label">Total standalone value</div>
+        <div class="total-amount">₦335,000</div>
+      </div>
+      <div style="text-align:right">
+        <div class="total-label">Your investment today</div>
+        <div style="display:flex; align-items:baseline; gap:0.75rem; justify-content:flex-end">
+          <span style="font-size:1.25rem; color:rgba(245,239,230,0.4); text-decoration:line-through; font-variant-numeric:tabular-nums;">₦20,000</span>
+          <span style="font-size:2rem; font-weight:700; color:var(--gold); font-variant-numeric:tabular-nums;">₦15,000</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:2rem;">
+      <button class="btn-gold" onclick="openModal()" style="max-width:420px; margin:0 auto;">
+        I'm In — Claim My Early Spot at ₦15,000 →
+      </button>
+      <div style="margin-top:0.625rem; font-size:0.8125rem; color:var(--beige); opacity:0.45; font-style:italic;">
+        Only <span id="mid-spots">15</span> spots at this price. After that, ₦20,000.
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- ── PRICING ── -->
-<section class="pricing-section fade-up">
+<!-- ── WHO THIS IS FOR ── -->
+<section class="section fade">
   <div class="wrap">
-    <div class="pricing-wrap">
+    <div class="label">Qualification</div>
+    <h2>This Is For You If…</h2>
 
-      <div class="pricing-header">
-        <h2>Claim your spot now</h2>
-        <p>First 15 orders get early-bird pricing. After that, regular price applies.</p>
+    <div class="who-grid">
+      <div class="who-card who-card--yes">
+        <h3>✓ You're a fit</h3>
+        <ul class="who-list who-list--yes">
+          <li>You've already started investing but want to go deeper</li>
+          <li>You're serious enough to show up and apply what you learn</li>
+          <li>You want a system, not just tips and hot takes</li>
+          <li>You're open to using AI tools to sharpen your research</li>
+          <li>You want to build a portfolio with real conviction behind every position</li>
+        </ul>
       </div>
-
-      <div class="enroll-body">
-        <div class="enroll-price" id="enroll-price">₦15,000</div>
-        <div class="enroll-note" id="enroll-note">Early bird price — <span id="spots-display">15</span> of 15 spots remaining at this rate.</div>
-        <button class="enroll-btn" id="enroll-btn" onclick="openModal('early')">
-          Join the Advanced Cohort &rarr;
-        </button>
-        <div class="enroll-spots" id="enroll-spots"></div>
+      <div class="who-card who-card--no">
+        <h3>✗ This isn't for you if</h3>
+        <ul class="who-list who-list--no">
+          <li>You want get-rich-quick schemes or stock tips</li>
+          <li>You've never invested and are looking for basics</li>
+          <li>You're not willing to do the work between sessions</li>
+          <li>You want someone to manage your portfolio for you</li>
+        </ul>
       </div>
-
-      <div class="pricing-footer">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <rect x="1" y="4" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.25" opacity="0.6"/>
-          <path d="M4.5 4V3C4.5 1.895 5.395 1 6.5 1h1C8.605 1 9.5 1.895 9.5 3v1" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" opacity="0.6"/>
-        </svg>
-        Secure checkout via Korapay &mdash; WhatsApp access granted immediately after payment
-      </div>
-
     </div>
+  </div>
+</section>
+
+<!-- ── CLOSING CTA ── -->
+<section class="cta-section fade">
+  <div class="wrap" style="text-align:center">
+
+    <div class="label" style="text-align:center">Don't sit on this</div>
+    <h2>
+      ₦5,000 Off Disappears<br>
+      <em>When the 15 Spots Fill Up.</em>
+    </h2>
+    <p>
+      This price only exists for the first 15 people. After that, it goes back to ₦20,000 — no exceptions. If you've made it this far, you already know you want this.
+    </p>
+
+    <div class="cta-box">
+      <div class="cta-label-above">⚡ LIMITED TIME EARLY BIRD</div>
+
+      <div class="cta-price-row">
+        <span class="price-old">₦20,000</span>
+        <span class="price-new">₦15,000</span>
+      </div>
+
+      <div class="cta-spots">🔴 <span id="cta-spots">15</span> of 15 early spots remaining</div>
+
+      <button class="btn-gold" onclick="openModal()" style="font-size:1.125rem; padding:1.125rem 1.5rem;">
+        Claim My Spot — ₦15,000 →
+      </button>
+
+      <div class="cta-note">
+        Price increases to ₦20,000 once spots fill.<br>
+        Secure checkout via Korapay — WhatsApp access granted immediately after payment.
+      </div>
+    </div>
+
+    <div class="trust-row">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <rect x="1" y="4" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
+        <path d="M4.5 4V3C4.5 1.895 5.395 1 6.5 1h1C8.605 1 9.5 1.895 9.5 3v1" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+      </svg>
+      Secured by Korapay · Finspire · Where Money Meets Mastery
+    </div>
+
   </div>
 </section>
 
 <!-- ── FOOTER ── -->
 <footer class="footer">
-  <div class="wrap">
-    &copy; 2025 Finspire &mdash; Where Money Meets Mastery
-  </div>
+  <span>&copy; 2025 Finspire — Where Money Meets Mastery</span>
 </footer>
 
 <!-- ── MODAL ── -->
@@ -719,7 +931,7 @@ body {
     <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
     <h3 id="modal-title">Reserve your spot</h3>
     <div class="modal-price" id="modal-price">₦15,000</div>
-    <div class="modal-tier-note" id="modal-tier-note">Early bird price</div>
+    <div class="modal-tier-note" id="modal-tier-note">Early bird — <span id="modal-spots">15</span> spots remaining</div>
 
     <form id="payment-form" onsubmit="pay(event)">
       <div class="form-field">
@@ -730,52 +942,48 @@ body {
         <label for="pemail">Email address</label>
         <input type="email" id="pemail" name="email" placeholder="you@email.com" autocomplete="email" required>
       </div>
-      <div class="form-err" id="form-err" role="alert">Please fill in your name and email before continuing.</div>
-      <button type="submit" class="modal-submit" id="pay-btn">Proceed to payment &rarr;</button>
+      <div class="form-err" id="form-err" role="alert">Please fill in your name and email to continue.</div>
+      <button type="submit" class="modal-submit" id="pay-btn">Proceed to Payment →</button>
     </form>
 
-    <p class="modal-trust">Secured by Korapay &middot; You'll be added to the WhatsApp group immediately after payment</p>
+    <p class="modal-trust">Secured by Korapay · WhatsApp access granted immediately after payment</p>
   </div>
 </div>
 
 <script src="https://korablobstorage.blob.core.windows.net/modal-bucket/korapay-collections.min.js"></script>
 <script>
-  /* ── Spots ── */
   function renderSpots() {
     const n = spotsRemaining;
     const earlyAvail = n > 0;
-    const price = earlyAvail ? EARLY_PRICE : REGULAR_PRICE;
-    const priceStr = '₦' + price.toLocaleString('en-NG');
-    const noteStr = earlyAvail
-      ? 'Early bird price — ' + n + ' of ' + TOTAL_SPOTS + ' spots remaining at this rate.'
-      : 'Regular price — early bird spots are now filled.';
-    const tier = earlyAvail ? 'early' : 'regular';
+    const spotText = n + ' of ' + TOTAL_SPOTS;
+    const barText  = n + ' spot' + (n !== 1 ? 's' : '');
 
-    document.getElementById('hero-spots').textContent     = n;
-    document.getElementById('bar-spots').textContent      = n + ' spot' + (n !== 1 ? 's' : '');
-    document.getElementById('spots-display').textContent  = n;
-
-    document.getElementById('hero-price').textContent     = priceStr;
-    document.getElementById('hero-card-note').textContent = noteStr;
-    document.getElementById('hero-cta-btn').onclick       = () => openModal(tier);
-
-    document.getElementById('enroll-price').textContent   = priceStr;
-    document.getElementById('enroll-note').textContent    = noteStr;
-    document.getElementById('enroll-btn').onclick         = () => openModal(tier);
+    document.getElementById('bar-spots').textContent    = barText;
+    document.getElementById('hero-spots').textContent   = n;
+    document.getElementById('hero-spots-2').textContent = n;
+    document.getElementById('mid-spots').textContent    = n;
+    document.getElementById('cta-spots').textContent    = n;
+    document.getElementById('modal-spots').textContent  = n;
 
     if (!earlyAvail) {
       document.getElementById('urgency-bar').innerHTML =
-        'Early bird sold out &mdash; regular price <strong>₦20,000</strong> now applies.';
+        '⚠ Early bird sold out — price is now <strong>₦20,000</strong>';
+      document.querySelectorAll('.spots-left, .cta-spots').forEach(el => {
+        el.textContent = 'Early bird spots filled — joining at ₦20,000';
+        el.style.color = 'var(--charcoal)';
+      });
+      document.getElementById('modal-price').textContent = '₦20,000';
+      document.getElementById('modal-tier-note').textContent = 'Regular price';
     }
   }
   renderSpots();
 
-  /* ── Modal ── */
-  function openModal(tier) {
-    chosenTier = (tier === 'early' && spotsRemaining <= 0) ? 'regular' : tier;
-    document.getElementById('modal-price').textContent     = chosenTier === 'early' ? '₦15,000' : '₦20,000';
-    document.getElementById('modal-tier-note').textContent = chosenTier === 'early'
-      ? 'Early bird price — ' + spotsRemaining + ' spot' + (spotsRemaining !== 1 ? 's' : '') + ' remaining'
+  function openModal() {
+    const earlyAvail = spotsRemaining > 0;
+    chosenTier = earlyAvail ? 'early' : 'regular';
+    document.getElementById('modal-price').textContent = earlyAvail ? '₦15,000' : '₦20,000';
+    document.getElementById('modal-tier-note').textContent = earlyAvail
+      ? 'Early bird — ' + spotsRemaining + ' spot' + (spotsRemaining !== 1 ? 's' : '') + ' remaining'
       : 'Regular price';
     document.getElementById('overlay').classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -785,7 +993,7 @@ body {
   function closeModal() {
     document.getElementById('overlay').classList.remove('active');
     document.body.style.overflow = '';
-    document.getElementById('pay-btn').textContent = 'Proceed to payment →';
+    document.getElementById('pay-btn').textContent = 'Proceed to Payment →';
     document.getElementById('pay-btn').disabled = false;
     document.getElementById('form-err').style.display = 'none';
   }
@@ -795,7 +1003,6 @@ body {
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  /* ── Payment ── */
   function pay(e) {
     e.preventDefault();
     const name  = document.getElementById('pname').value.trim();
@@ -806,32 +1013,30 @@ body {
     const btn = document.getElementById('pay-btn');
     btn.textContent = 'Loading…';
     btn.disabled = true;
-
     window.Korapay.initialize({
       key:       KORAPAY_KEY,
-      reference: 'ADV_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5).toUpperCase(),
+      reference: 'ADV_' + Date.now() + '_' + Math.random().toString(36).substr(2,5).toUpperCase(),
       amount:    chosenTier === 'early' ? EARLY_PRICE : REGULAR_PRICE,
       currency:  'NGN',
       customer:  { name, email },
       onSuccess: () => { closeModal(); window.location.href = WHATSAPP_LINK; },
       onFailed:  () => {
-        btn.textContent = 'Proceed to payment →';
+        btn.textContent = 'Proceed to Payment →';
         btn.disabled = false;
         err.textContent = 'Payment was not completed. Please try again.';
         err.style.display = 'block';
       },
       onClose: () => {
-        btn.textContent = 'Proceed to payment →';
+        btn.textContent = 'Proceed to Payment →';
         btn.disabled = false;
       }
     });
   }
 
-  /* ── Scroll fade ── */
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.06 });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
