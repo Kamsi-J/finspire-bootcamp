@@ -610,12 +610,13 @@ body {
 @media (prefers-reduced-motion: reduce) { .fade { opacity:1; transform:none; transition:none; } }
 </style>
 
+<script src="config.js"></script>
 <script>
   const SPOTS_LEFT      = 15;
   const TOTAL_SPOTS     = 15;
   const EARLY_PRICE     = 15000;
   const REGULAR_PRICE   = 20000;
-  const KORAPAY_KEY     = "pk_live_nVemMTivHPcJdCoCxwm8yYdC9eL2v8tJETnds6VU";
+  const KORAPAY_KEY     = window.KORAPAY_KEY || "";
   const WHATSAPP_LINK   = "https://chat.whatsapp.com/JxRfVC6FpamJM5WMbkvpK6?s=cl&p=a&mlu=4";
   let   spotsRemaining  = SPOTS_LEFT;
   let   chosenTier      = 'early';
