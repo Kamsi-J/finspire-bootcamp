@@ -610,13 +610,12 @@ body {
 @media (prefers-reduced-motion: reduce) { .fade { opacity:1; transform:none; transition:none; } }
 </style>
 
-<script src="config.js"></script>
 <script>
   const SPOTS_LEFT      = 15;
   const TOTAL_SPOTS     = 15;
   const EARLY_PRICE     = 15000;
   const REGULAR_PRICE   = 20000;
-  const KORAPAY_KEY     = window.KORAPAY_KEY || "";
+  const KORAPAY_KEY     = "pk_live_nVemMTivHPcJdCoCxwm8yYdC9eL2v8tJETnds6VU";
   const WHATSAPP_LINK   = "https://chat.whatsapp.com/JxRfVC6FpamJM5WMbkvpK6?s=cl&p=a&mlu=4";
   let   spotsRemaining  = SPOTS_LEFT;
   let   chosenTier      = 'early';
@@ -1007,26 +1006,46 @@ body {
     if (!name || !email) { err.style.display = 'block'; return; }
     err.style.display = 'none';
     const btn = document.getElementById('pay-btn');
+
+    // Guard: payment library failed to load (network/CSP) or key missing
+    if (!window.Korapay || typeof window.Korapay.initialize !== 'function') {
+      err.textContent = 'Payment service failed to load. Please refresh the page and try again.';
+      err.style.display = 'block';
+      return;
+    }
+    if (!KORAPAY_KEY) {
+      err.textContent = 'Payment is temporarily unavailable. Please try again shortly.';
+      err.style.display = 'block';
+      return;
+    }
+
     btn.textContent = 'Loading…';
     btn.disabled = true;
-    window.Korapay.initialize({
-      key:       KORAPAY_KEY,
-      reference: 'ADV_' + Date.now() + '_' + Math.random().toString(36).substr(2,5).toUpperCase(),
-      amount:    chosenTier === 'early' ? EARLY_PRICE : REGULAR_PRICE,
-      currency:  'NGN',
-      customer:  { name, email },
-      onSuccess: () => { closeModal(); window.location.href = WHATSAPP_LINK; },
-      onFailed:  () => {
-        btn.textContent = 'Proceed to Payment →';
-        btn.disabled = false;
-        err.textContent = 'Payment was not completed. Please try again.';
-        err.style.display = 'block';
-      },
-      onClose: () => {
-        btn.textContent = 'Proceed to Payment →';
-        btn.disabled = false;
-      }
-    });
+    try {
+      window.Korapay.initialize({
+        key:       KORAPAY_KEY,
+        reference: 'ADV_' + Date.now() + '_' + Math.random().toString(36).substr(2,5).toUpperCase(),
+        amount:    chosenTier === 'early' ? EARLY_PRICE : REGULAR_PRICE,
+        currency:  'NGN',
+        customer:  { name, email },
+        onSuccess: () => { closeModal(); window.location.href = WHATSAPP_LINK; },
+        onFailed:  () => {
+          btn.textContent = 'Proceed to Payment →';
+          btn.disabled = false;
+          err.textContent = 'Payment was not completed. Please try again.';
+          err.style.display = 'block';
+        },
+        onClose: () => {
+          btn.textContent = 'Proceed to Payment →';
+          btn.disabled = false;
+        }
+      });
+    } catch (ex) {
+      btn.textContent = 'Proceed to Payment →';
+      btn.disabled = false;
+      err.textContent = 'Something went wrong starting the payment. Please try again.';
+      err.style.display = 'block';
+    }
   }
 
   const obs = new IntersectionObserver(entries => {
