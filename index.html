@@ -231,10 +231,8 @@ body {
 }
 
 .pain-list li {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  gap: 0.875rem;
-  align-items: start;
+  position: relative;
+  padding-left: 1.75rem;
   font-size: 1rem;
   line-height: 1.55;
   color: var(--charcoal);
@@ -242,10 +240,12 @@ body {
 
 .pain-list li::before {
   content: '✗';
+  position: absolute;
+  left: 0;
+  top: 0;
   font-size: 1rem;
   font-weight: 700;
   color: var(--red);
-  margin-top: 1px;
 }
 
 /* ── Value stack ── */
@@ -699,7 +699,7 @@ body {
           <strong>Company Valuation Frameworks</strong>
           <span>How to calculate what a stock is actually worth — so you buy low and sell high with confidence, not luck.</span>
         </div>
-        <div class="v-value">₦50,000</div>
+        <div class="v-value">₦17,000</div>
       </li>
 
       <li class="value-item">
@@ -713,7 +713,7 @@ body {
           <strong>Reading Financial Statements</strong>
           <span>The income statement, balance sheet, cash flow — what matters, what's noise, and what most investors never look at.</span>
         </div>
-        <div class="v-value">₦35,000</div>
+        <div class="v-value">₦12,000</div>
       </li>
 
       <li class="value-item">
@@ -727,7 +727,7 @@ body {
           <strong>Stock-Picking Frameworks</strong>
           <span>A repeatable system to screen for and identify genuinely strong companies — before the crowd notices them.</span>
         </div>
-        <div class="v-value">₦40,000</div>
+        <div class="v-value">₦13,000</div>
       </li>
 
       <li class="value-item">
@@ -741,7 +741,7 @@ body {
           <strong>My Personal Claude AI Skill File</strong>
           <span>The exact AI setup I use to research companies, stress-test ideas, and analyse reports in a fraction of the time.</span>
         </div>
-        <div class="v-value">₦30,000</div>
+        <div class="v-value">₦10,000</div>
       </li>
 
       <li class="value-item">
@@ -755,7 +755,7 @@ body {
           <strong>AI Tools for Investing</strong>
           <span>How to use today's AI tools to do the research of a full weekend in under an hour — practically, not theoretically.</span>
         </div>
-        <div class="v-value">₦25,000</div>
+        <div class="v-value">₦8,000</div>
       </li>
 
       <li class="value-item">
@@ -769,7 +769,7 @@ body {
           <strong>Gold &amp; ETF Investing</strong>
           <span>How to invest in gold, commodity ETFs, and global indices — and the practical how-to for doing it as a Nigerian investor.</span>
         </div>
-        <div class="v-value">₦30,000</div>
+        <div class="v-value">₦10,000</div>
       </li>
 
       <li class="value-item">
@@ -783,7 +783,7 @@ body {
           <strong>Dividend Investing — The Deep Cut</strong>
           <span>Yield traps, reinvestment strategy, compounding mechanics — everything the surface-level guides skip over.</span>
         </div>
-        <div class="v-value">₦30,000</div>
+        <div class="v-value">₦10,000</div>
       </li>
 
       <li class="value-item">
@@ -797,7 +797,7 @@ body {
           <strong>Post-Class Support</strong>
           <span>Continued access to the group after class ends. Portfolio reviews, questions answered, ongoing conversation.</span>
         </div>
-        <div class="v-value">₦20,000</div>
+        <div class="v-value">₦7,000</div>
       </li>
 
       <li class="value-item" style="padding-top:1.5rem; border-top: 1px solid rgba(196,150,10,0.3);">
@@ -812,7 +812,7 @@ body {
           <strong>30-Minute Private 1-on-1 Call With Me</strong>
           <span>We review your specific portfolio, answer your exact questions, and I give you a clear next move. One-on-one. No generic advice.</span>
         </div>
-        <div class="v-value">₦75,000</div>
+        <div class="v-value">₦25,000</div>
       </li>
 
     </ul>
@@ -820,7 +820,7 @@ body {
     <div class="total-row">
       <div>
         <div class="total-label">Total standalone value</div>
-        <div class="total-amount">₦335,000</div>
+        <div class="total-amount">₦112,000</div>
       </div>
       <div style="text-align:right">
         <div class="total-label">Your investment today</div>
@@ -853,7 +853,6 @@ body {
       <div class="who-card who-card--yes">
         <h3>✓ You're a fit</h3>
         <ul class="who-list who-list--yes">
-          <li>You've already started investing but want to go deeper</li>
           <li>You're serious enough to show up and apply what you learn</li>
           <li>You want a system, not just tips and hot takes</li>
           <li>You're open to using AI tools to sharpen your research</li>
